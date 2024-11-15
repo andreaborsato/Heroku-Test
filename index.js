@@ -43,10 +43,10 @@ io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
   let id = socket.id;
-
   myClients.push(id);
-
   console.log(myClients);
+
+  io.to(id).emit("id_assignment", id);
 
   socket.on("disconnect", function () {
     // Remove the disconnected client from the clients object
