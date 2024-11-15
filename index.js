@@ -5,6 +5,8 @@ const socketIO = require("socket.io");
 const cors = require("cors");
 const { join } = require("node:path");
 
+let myClients = [];
+
 // Name Clients to send them data
 
 // Create an Express app
@@ -40,9 +42,18 @@ var clients = {};
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
+  let id = socket.id;
+
+  myClients.push(id);
+
+  console.log(myClients);
+
   socket.on("disconnect", function () {
     // Remove the disconnected client from the clients object
-    delete socket.id;
+
+    delete myClients[id];
+    removeItem(myClients, id);
+    console.log("Updated client list: " + myClients);
   });
 });
 
@@ -51,3 +62,11 @@ const port = process.env.PORT || 3000;
 server.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port http://0.0.0.0:${port}`);
 });
+
+function removeItem(array, itemToRemove) {
+  const index = array.indexOf(itemToRemove);
+
+  if (index !== -1) {
+    array.splice(index, 1);
+  }
+}
