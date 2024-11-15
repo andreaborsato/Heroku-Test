@@ -18,11 +18,9 @@
   <body>
     <script src="sketch.js"></script>
     <script>
-    var socket = io.connect("http://172.20.10.2:3000");
+    //var socket = io.connect("http://172.20.10.2:3000");
+    var socket = io.connect();
 
-    socket.on('userLeft', function(data) {
-      document.querySelector('.notification').innerHTML = data
-    })
     </script>
   </body>
 </html>
